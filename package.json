@@ -1,0 +1,10 @@
+{
+  "name": "kode-iot-compiler",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Servicio de compilación de K-ode (IoT): arduino-cli real, para flashear ESP32/ESP8266 por USB desde el navegador.",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}
