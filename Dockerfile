@@ -27,7 +27,8 @@ RUN arduino-cli config init && \
 # con el que cada una está registrada ahí — el repo es inequívoco. Las de Firebase están [DEPRECATED] en favor
 # de "FirebaseClient" (API nueva), pero cpp.ts genera código contra esta API clásica (Firebase.begin/getFloat/…),
 # así que son las que hace falta instalar aquí.
-RUN arduino-cli lib install --git-url https://github.com/DFRobot/DFRobot_DHT11 \
+RUN arduino-cli config set library.enable_unsafe_install true \
+ && arduino-cli lib install --git-url https://github.com/DFRobot/DFRobot_DHT11 \
  && arduino-cli lib install --git-url https://github.com/mobizt/Firebase-ESP32 \
  && arduino-cli lib install --git-url https://github.com/mobizt/Firebase-ESP8266
 
