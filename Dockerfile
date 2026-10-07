@@ -5,8 +5,13 @@ FROM node:20-bookworm-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates python3 && rm -rf /var/lib/apt/lists/*
 
-# arduino-cli (binario oficial, instalado en /usr/local/bin).
-RUN curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh -s -- -b /usr/local/bin
+# arduino-cli (binario oficial, instalado en /usr/local/bin). Versión fija descargada directo del release de
+# GitHub (no el install.sh oficial): ese script intenta resolver "latest" vía la API de GitHub y en este
+# entorno esa llamada daba 404 — bajar un tar.gz de una versión fija es más simple y reproducible.
+RUN curl -fsSL -o /tmp/arduino-cli.tar.gz \
+      https://github.com/arduino/arduino-cli/releases/download/v1.5.1/arduino-cli_1.5.1_Linux_64bit.tar.gz \
+ && tar -xzf /tmp/arduino-cli.tar.gz -C /usr/local/bin arduino-cli \
+ && rm /tmp/arduino-cli.tar.gz
 
 # Índices de placas que no vienen en el catálogo oficial de Arduino (ESP32/ESP8266 son de Espressif).
 RUN arduino-cli config init && \
