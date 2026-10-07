@@ -2,10 +2,11 @@
 // PlatformIoT — librería real (no un nombre puesto) que usa el .ino que genera K-ode para los pasos
 // «Enviar lectura»/«Leer comando». Funciona en ESP32 y ESP8266 (usa HTTPClient de cada core).
 //
-// IMPORTANTE (2026-10-07): el backend de K-ode todavía NO tiene las rutas /api/iot/reading y
-// /api/iot/command — begin()/sendReading()/readCommand() SÍ hacen una petición HTTP real (no son un stub),
-// pero hoy recibirán 404 hasta que esas rutas existan del lado del servidor. Cuando se construyan, esta
-// librería no necesita cambiar: ya habla el protocolo real (POST JSON con el token de dispositivo).
+// El backend de K-ode YA tiene las rutas /api/iot/reading y /api/iot/command (2026-10-07, migración 0113:
+// device_readings) — begin()/sendReading()/readCommand() hablan con ellas de verdad. sendReading() guarda
+// la última lectura de ese (tabla, campo); readCommand() lee esa MISMA fila (todavía no hay un paso que
+// ESCRIBA un comando desde la app — por ahora readCommand() solo devuelve lo último que el propio
+// dispositivo reportó, listo para cuando exista ese paso).
 #include <Arduino.h>
 
 #ifndef PLATFORMIOT_API_HOST
